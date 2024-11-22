@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User  # Import User model
 from django.db import models
 
 class Message(models.Model):
