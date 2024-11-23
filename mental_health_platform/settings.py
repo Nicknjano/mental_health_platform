@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = '/checkins/checkin/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+
 
 # Application definition
 

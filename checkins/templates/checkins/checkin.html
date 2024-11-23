@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Check-In</title>
+</head>
+<body>
+    <h1>Daily Mental Health Check-In</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="mood">Mood (1-5):</label>
+        <input type="number" name="mood" min="1" max="5" required><br>
+        
+        <label for="sleep_hours">Sleep Hours:</label>
+        <input type="number" name="sleep_hours" step="0.1" required><br>
+        
+        <label for="stress_level">Stress Level (1-5):</label>
+        <input type="number" name="stress_level" min="1" max="5" required><br>
+        
+        <label for="notes">Notes (Optional):</label>
+        <textarea name="notes"></textarea><br>
+        
+        <button type="submit">Submit Check-In</button>
+    </form>
+</body>
+</html>
