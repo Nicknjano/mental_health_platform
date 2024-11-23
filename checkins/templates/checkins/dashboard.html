@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+</head>
+<body>
+    <h1>Analytics Dashboard</h1>
+
+    <div style="width: 70%; margin: auto;">
+        <canvas id="moodChart"></canvas>
+        <canvas id="stressChart"></canvas>
+        <canvas id="sleepChart"></canvas>
+    </div>
+
+    <!-- Use json_script to safely inject the data -->
+    <script type="application/json" id="mood-data">{{ mood_data|json_script:"mood_data" }}</script>
+    <script type="application/json" id="stress-data">{{ stress_data|json_script:"stress_data" }}</script>
+    <script type="application/json" id="sleep-data">{{ sleep_data|json_script:"sleep_data" }}</script>
+
+    <script>
+        // Parse the JSON data safely
+        const moodData = JSON.parse(document.getElementById('mood-data').textContent);
+        const stressData = JSON.parse(document.getElementById('stress-data').textContent);
+        const sleepData = JSON.parse(document.getElementById('sleep-data').textContent);
+
+        // Ensure the data is passed correctly
+        console.log('Mood Data:', moodData);
+        console.log('Stress Data:', stressData);
+        console.log('Sleep Data:', sleepData);
+
+        // Extract labels (dates) and values for charts
+        const labels = moodData.map(item => item[0]); // Extract dates
+        const moodValues = moodData.map(item => item[1]);
+        const stressValues = stressData.map(item => item[1]);
+        const sleepValues = sleepData.map(item => item[1]);
+
+        // Create Mood Chart
+        const moodCtx = document.getElementById('moodChart').getContext('2d');
+        new Chart(moodCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Mood Levels',
+                    data: moodValues,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Mood Over Time'
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        });
+
+        // Create Stress Chart
+        const stressCtx = document.getElementById('stressChart').getContext('2d');
+        new Chart(stressCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Stress Levels',
+                    data: stressValues,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Stress Over Time'
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        });
+
+        // Create Sleep Hours Chart
+        const sleepCtx = document.getElementById('sleepChart').getContext('2d');
+        new Chart(sleepCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Sleep Hours',
+                    data: sleepValues,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sleep Hours Over Time'
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

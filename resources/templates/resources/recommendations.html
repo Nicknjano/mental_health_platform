@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Recommendations</title>
+</head>
+<body>
+    <h1>Personalized Recommendations</h1>
+
+    <p>{{ message }}</p>
+
+    {% if resources %}
+        <ul>
+            {% for resource in resources %}
+                <li>
+                    <strong>{{ resource.title }}</strong> - {{ resource.category }}
+                    <p>{{ resource.description }}</p>
+                    <a href="{{ resource.link }}" target="_blank">Learn more</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No resources to recommend at the moment.</p>
+    {% endif %}
+</body>
+</html>
