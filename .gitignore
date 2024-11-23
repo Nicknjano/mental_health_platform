@@ -1,5 +1,2 @@
 /venv
-/checkins/__pycache__
-/mental_health_platform/__pycache__
-/messaging/__pycache__
-/resources/__pycache__
+/*/__pycache__
